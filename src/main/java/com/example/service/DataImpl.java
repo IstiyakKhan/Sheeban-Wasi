@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.model.CaliforniaHousing;
 import com.example.model.QueryResponse;
+import com.example.model.QueryResponse2;
 import com.example.repositary.CaliforniaHousingRepositary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -52,31 +53,35 @@ public class DataImpl implements DataInterface{
     }
 
     @Override
-    public List<QueryResponse> getQueryResponse(String query) {
+    public QueryResponse2 getQueryResponse(String query) {
         List<QueryResponse> response = new ArrayList<>();
+        QueryResponse2 queryResponse2 = new QueryResponse2();
         jdbcTemplate.query(query.toString(), new ResultSetExtractor<Object>() {
             @Override
             public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
                 int row = 0;
+                List<String> columnList = new ArrayList<>();
                 while (rs.next()){
                     ResultSetMetaData metaData = rs.getMetaData();
                     QueryResponse result = new QueryResponse();
                     row++;
                     String data = "";
-                    String column = "";
                     int columns = metaData.getColumnCount();
                     for (int i = 1; i <= columns; i++) {
+                        if(row == 1) {
+                            columnList.add(metaData.getColumnName(i));
+                        }
                         data += rs.getString(i) + ",";
-                        column += metaData.getColumnName(i) + ",";
                     }
                     result.setRow(row);
-                    result.setColumn(column.replaceAll(",+$", ""));
                     result.setData(data.replaceAll(",+$",""));
                     response.add(result);
                 }
+                queryResponse2.setColumns(columnList);
+                queryResponse2.setData(response);
                 return null;
             }
         });
-        return response;
+        return queryResponse2;
     }
 }

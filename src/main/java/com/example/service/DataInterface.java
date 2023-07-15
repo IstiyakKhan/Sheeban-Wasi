@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.model.CaliforniaHousing;
 import com.example.model.QueryResponse;
+import com.example.model.QueryResponse2;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface DataInterface {
 
     List<CaliforniaHousing> getAllData();
 
-    List<QueryResponse> getQueryResponse(String query);
+    QueryResponse2 getQueryResponse(String query);
 }

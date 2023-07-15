@@ -9,6 +9,8 @@ public class QueryResponse {
 
     private String data;
 
+    private int row;
+
     public String getColumn() {
         return column;
     }
@@ -23,5 +25,13 @@ public class QueryResponse {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 }

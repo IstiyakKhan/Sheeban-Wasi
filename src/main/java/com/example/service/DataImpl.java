@@ -57,14 +57,22 @@ public class DataImpl implements DataInterface{
         jdbcTemplate.query(query.toString(), new ResultSetExtractor<Object>() {
             @Override
             public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+                int row = 0;
                 while (rs.next()){
                     ResultSetMetaData metaData = rs.getMetaData();
+                    QueryResponse result = new QueryResponse();
+                    row++;
+                    String data = "";
+                    String column = "";
                     int columns = metaData.getColumnCount();
                     for (int i = 1; i <= columns; i++) {
-                        QueryResponse result = new QueryResponse();
-                        result.setData(rs.getString(i));
-                        response.add(result);
+                        data += rs.getString(i) + ",";
+                        column += metaData.getColumnName(i) + ",";
                     }
+                    result.setRow(row);
+                    result.setColumn(column.replaceAll(",+$", ""));
+                    result.setData(data.replaceAll(",+$",""));
+                    response.add(result);
                 }
                 return null;
             }

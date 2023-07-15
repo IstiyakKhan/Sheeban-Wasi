@@ -27,19 +27,19 @@ public class DataImpl implements DataInterface{
     @Override
     public List<String> getAllColumn() {
         List<String> column = new ArrayList<>();
-        column.add("MedianHouseValue");
-        column.add("MedianIncome");
-        column.add("MedianAge");
-        column.add("TOTRooms");
-        column.add("TOTBedrooms");
+        column.add("Median House Value");
+        column.add("Median Income");
+        column.add("Median Age");
+        column.add("TOT Rooms");
+        column.add("TOT Bedrooms");
         column.add("Population");
         column.add("Households");
-        column.add("latitude");
-        column.add("longitude");
-        column.add("distanceToCoast");
-        column.add("distanceToLa");
-        column.add("distanceToSanDiago");
-        column.add("distanceToSanjose");
+        column.add("Latitude");
+        column.add("Longitude");
+        column.add("Distance To Coast");
+        column.add("Distance To La");
+        column.add("Distance To SanDiago");
+        column.add("Distance To Sanjose");
 
         return column;
     }

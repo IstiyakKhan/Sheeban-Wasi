@@ -6,10 +6,13 @@ import com.example.model.QueryResponse;
 import com.example.repositary.CaliforniaHousingRepositary;
 import com.example.service.DataInterface;
 import netscape.javascript.JSObject;
+import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.json.HTTP;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,8 +53,16 @@ public class DataController {
     }
 
 
-    @PostMapping("/query")
+    @GetMapping("/query")
     public ResponseEntity<?> getQueriedData(@RequestParam String query){
-        return ResponseEntity.ok(dataInterface.getQueryResponse(query));
+        try {
+            if(query != null && !query.equals("")) {
+                return ResponseEntity.ok(dataInterface.getQueryResponse(query));
+            } else {
+                return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e){
+           return ResponseEntity.ok(e.getMessage());
+        }  
     }
 }

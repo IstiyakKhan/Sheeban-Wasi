@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import com.example.model.AllDataResponse;
+import com.example.model.ErrorResponse;
 import com.example.repositary.CaliforniaHousingRepositary;
 import com.example.service.DataInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,8 +24,14 @@ public class DataController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    private String errorMessage = "Something Went Wrong. Please Enter Proper Query";
+
+    private String queryisEmpty = "Query is Empty";
+
     @Autowired
     DataInterface dataInterface;
+
+    private com.example.model.ErrorResponse errorResponse;
 
 
     @GetMapping("/all")
@@ -42,10 +50,18 @@ public class DataController {
             if(query != null && !query.equals("")) {
                 return ResponseEntity.ok(dataInterface.getQueryResponse(query));
             } else {
-                return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+                return getErrorResponseEntity(queryisEmpty, 400, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e){
-            return ResponseEntity.ok(e.getMessage());
+            return getErrorResponseEntity(e.getMessage(), 500, HttpStatus.BAD_GATEWAY);
         }
+    }
+
+    public ResponseEntity<?> getErrorResponseEntity(String errorMessage, int errorCode, HttpStatus httpStatus) {
+        errorResponse = new ErrorResponse();
+        errorResponse.setErroMessage(errorMessage);
+        errorResponse.setErroCode(errorCode);
+        return new ResponseEntity<Object>(
+                errorResponse, new HttpHeaders(), httpStatus);
     }
 }

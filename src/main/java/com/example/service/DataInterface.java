@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.model.CaliforniaHousing;
-import com.example.model.QueryResponse;
 import com.example.model.QueryResponse2;
 
 import java.util.List;

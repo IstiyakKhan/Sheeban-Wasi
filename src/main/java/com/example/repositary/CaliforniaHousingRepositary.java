@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface CaliforniaHousingRepositary extends JpaRepository<CaliforniaHousing, Integer> {
 
-    @Query(value = "select * from houses where id > 1", nativeQuery = true)
+    @Query(value = "select * from houses limit 50", nativeQuery = true)
     List<CaliforniaHousing> findAllData();
 }

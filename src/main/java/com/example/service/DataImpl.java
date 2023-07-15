@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.model.CaliforniaHousing;
-import com.example.model.QueryResponse;
 import com.example.model.QueryResponse2;
 import com.example.repositary.CaliforniaHousingRepositary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -54,31 +54,28 @@ public class DataImpl implements DataInterface{
 
     @Override
     public QueryResponse2 getQueryResponse(String query) {
-        List<QueryResponse> response = new ArrayList<>();
         QueryResponse2 queryResponse2 = new QueryResponse2();
-        jdbcTemplate.query(query.toString(), new ResultSetExtractor<Object>() {
+        jdbcTemplate.query(query.toString() + " limit 50 ", new ResultSetExtractor<Object>() {
             @Override
             public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
                 int row = 0;
                 List<String> columnList = new ArrayList<>();
+                List<HashMap<String,String>> hashMaps = new ArrayList<>();
                 while (rs.next()){
-                    ResultSetMetaData metaData = rs.getMetaData();
-                    QueryResponse result = new QueryResponse();
                     row++;
-                    String data = "";
+                    ResultSetMetaData metaData = rs.getMetaData();
+                    HashMap<String, String> hashMap = new HashMap<>();
                     int columns = metaData.getColumnCount();
                     for (int i = 1; i <= columns; i++) {
                         if(row == 1) {
                             columnList.add(metaData.getColumnName(i));
                         }
-                        data += rs.getString(i) + ",";
+                        hashMap.put(metaData.getColumnName(i),rs.getString(i));
                     }
-                    result.setRow(row);
-                    result.setData(data.replaceAll(",+$",""));
-                    response.add(result);
+                    hashMaps.add(hashMap);
                 }
                 queryResponse2.setColumns(columnList);
-                queryResponse2.setData(response);
+                queryResponse2.setData(hashMaps);
                 return null;
             }
         });

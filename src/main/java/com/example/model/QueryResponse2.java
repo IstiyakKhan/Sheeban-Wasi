@@ -1,12 +1,13 @@
 package com.example.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class QueryResponse2 {
 
    List<String> columns;
 
-   List<QueryResponse> data;
+   List<HashMap<String, String>> data;
 
    public List<String> getColumns() {
       return columns;
@@ -16,11 +17,11 @@ public class QueryResponse2 {
       this.columns = columns;
    }
 
-   public List<QueryResponse> getData() {
+   public List<HashMap<String, String>> getData() {
       return data;
    }
 
-   public void setData(List<QueryResponse> data) {
+   public void setData(List<HashMap<String, String>> data) {
       this.data = data;
    }
 }

@@ -38,8 +38,6 @@ public class DataImpl implements DataInterface{
         column.add("Longitude");
         column.add("Distance To Coast");
         column.add("Distance To La");
-        column.add("Distance To SanDiago");
-        column.add("Distance To Sanjose");
 
         return column;
     }

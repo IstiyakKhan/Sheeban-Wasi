@@ -46,11 +46,6 @@ public class CaliforniaHousing {
     @Column(name = "distance_to_la")
     private String distanceToLA;
 
-    @Column(name = "distance_to_sandiego")
-    private String distanceToSandiago;
-
-    @Column(name = "distance_to_sanjose")
-    private String distanceToSanjose;
 
 
     public int getId() {
@@ -149,20 +144,5 @@ public class CaliforniaHousing {
         this.distanceToLA = distanceToLA;
     }
 
-    public String getDistanceToSandiago() {
-        return distanceToSandiago;
-    }
-
-    public void setDistanceToSandiago(String distanceToSandiago) {
-        this.distanceToSandiago = distanceToSandiago;
-    }
-
-    public String getDistanceToSanjose() {
-        return distanceToSanjose;
-    }
-
-    public void setDistanceToSanjose(String distanceToSanjose) {
-        this.distanceToSanjose = distanceToSanjose;
-    }
 
 }

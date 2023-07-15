@@ -1,0 +1,39 @@
+CREATE TABLE houses (
+   id serial primary key not null,
+   Median_House_Value numeric,
+   Median_Income numeric,
+   Median_Age numeric,
+   Tot_Rooms numeric,
+   Tot_Bedrooms numeric,
+   Population numeric,
+   Households numeric,
+   Latitude numeric,
+   Longitude numeric,
+   Distance_to_coast numeric,
+   Distance_to_LA numeric,
+   Distance_to_SanDiego numeric,
+   Distance_to_SanJose numeric,
+   Distance_to_SanFrancisco numeric
+);
+
+
+select * from houses 
+
+
+COPY houses(Median_House_Value ,
+   Median_Income ,
+   Median_Age ,
+   Tot_Rooms ,
+   Tot_Bedrooms ,
+   Population ,
+   Households ,
+   Latitude ,
+   Longitude ,
+   Distance_to_coast ,
+   Distance_to_LA ,
+   Distance_to_SanDiego ,
+   Distance_to_SanJose ,
+   Distance_to_SanFrancisco)
+FROM '[Enter the file location of csv in your local]'
+DELIMITER ','
+CSV HEADER;
